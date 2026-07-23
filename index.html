@@ -8,297 +8,46 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="SAMP Chat">
-    
     <title>SAMP Chat Log Generator</title>
-    
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        html, body {
-            width: 100%;
-            height: 100%;
-            background: #1a1a1a;
-            color: #fff;
-            font-family: Arial, sans-serif;
-        }
-        
-        body {
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        
-        .app-container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            padding: 0;
-        }
-        
-        .header {
-            background: #2a2a2a;
-            padding: 15px;
-            border-bottom: 1px solid #444;
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            flex-wrap: wrap;
-            flex-shrink: 0;
-        }
-        
-        .header-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .header-item label {
-            font-size: 12px;
-            color: #aaa;
-            min-width: 50px;
-        }
-        
-        .header-item input {
-            background: #333;
-            border: 1px solid #555;
-            color: #fff;
-            padding: 5px 10px;
-            border-radius: 3px;
-            width: 60px;
-            font-size: 12px;
-        }
-        
-        .header-item input:focus {
-            outline: none;
-            border-color: #ff9500;
-        }
-        
-        .editor-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            padding: 20px;
-            flex: 1;
-            overflow: hidden;
-        }
-        
-        .editor-panel, .preview-panel {
-            background: #222;
-            border: 1px solid #444;
-            border-radius: 5px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            min-height: 0;
-        }
-        
-        .panel-header {
-            background: #2a2a2a;
-            padding: 12px 15px;
-            border-bottom: 1px solid #444;
-            display: flex;
-            gap: 10px;
-            font-size: 13px;
-            flex-shrink: 0;
-        }
-        
-        .tab {
-            background: none;
-            border: none;
-            color: #888;
-            cursor: pointer;
-            padding: 8px 15px;
-            font-size: 13px;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-        
-        .tab.active {
-            color: #ff9500;
-            border-bottom: 2px solid #ff9500;
-            margin-bottom: -12px;
-            padding-bottom: 10px;
-        }
-        
-        .tab:hover {
-            color: #fff;
-        }
-        
-        .editor-input {
-            flex: 1;
-            background: #1a1a1a;
-            border: none;
-            color: #fff;
-            padding: 15px;
-            font-family: Arial, sans-serif;
-            font-size: 13px;
-            resize: none;
-            font-weight: bold;
-            min-height: 0;
-            overflow-y: auto;
-        }
-        
-        .editor-input:focus {
-            outline: none;
-        }
-        
-        .preview {
-            flex: 1;
-            background: #1a1a1a;
-            padding: 15px;
-            overflow-y: auto;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            font-weight: bold;
-            min-height: 0;
-        }
-        
-        .preview-line {
-            margin-bottom: 12px;
-            word-wrap: break-word;
-            white-space: pre-wrap;
-        }
-        
-        .control-group {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .control-btn {
-            background: #333;
-            border: 1px solid #555;
-            color: #aaa;
-            padding: 6px 12px;
-            cursor: pointer;
-            border-radius: 3px;
-            font-size: 12px;
-            font-weight: bold;
-            transition: all 0.3s;
-            flex-shrink: 0;
-        }
-        
-        .control-btn:hover {
-            background: #444;
-            color: #fff;
-            border-color: #666;
-        }
-        
-        .control-btn.active {
-            background: #ff9500;
-            border-color: #ff9500;
-            color: #000;
-        }
-        
-        .color-picker {
-            width: 30px;
-            height: 30px;
-            border: 1px solid #555;
-            cursor: pointer;
-            border-radius: 3px;
-            flex-shrink: 0;
-        }
-        
-        .bottom-controls {
-            display: flex;
-            gap: 10px;
-            padding: 20px;
-            background: #1a1a1a;
-            border-top: 1px solid #444;
-            flex-shrink: 0;
-        }
-        
-        .btn-download, .btn-copy {
-            flex: 1;
-            padding: 12px;
-            background: #ff9500;
-            border: none;
-            color: #000;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 3px;
-            font-size: 14px;
-            transition: all 0.3s;
-        }
-        
-        .btn-download:hover, .btn-copy:hover {
-            background: #ffaa22;
-            transform: translateY(-2px);
-        }
-        
-        .btn-clear {
-            padding: 12px;
-            background: #555;
-            border: none;
-            color: #fff;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 3px;
-            font-size: 14px;
-            flex-shrink: 0;
-        }
-        
-        .btn-clear:hover {
-            background: #666;
-        }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { width: 100%; height: 100%; background: #1a1a1a; color: #fff; font-family: Arial, sans-serif; }
+        body { display: flex; flex-direction: column; overflow: hidden; }
+        .app-container { flex: 1; display: flex; flex-direction: column; overflow: hidden; padding: 0; }
+        .header { background: #2a2a2a; padding: 15px; border-bottom: 1px solid #444; display: flex; gap: 20px; align-items: center; flex-wrap: wrap; flex-shrink: 0; }
+        .header-item { display: flex; align-items: center; gap: 10px; }
+        .header-item label { font-size: 12px; color: #aaa; min-width: 50px; }
+        .header-item input { background: #333; border: 1px solid #555; color: #fff; padding: 5px 10px; border-radius: 3px; width: 60px; font-size: 12px; }
+        .header-item input:focus { outline: none; border-color: #ff9500; }
+        .editor-section { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 20px; flex: 1; overflow: hidden; }
+        .editor-panel, .preview-panel { background: #222; border: 1px solid #444; border-radius: 5px; overflow: hidden; display: flex; flex-direction: column; min-height: 0; }
+        .panel-header { background: #2a2a2a; padding: 12px 15px; border-bottom: 1px solid #444; display: flex; gap: 10px; font-size: 13px; flex-shrink: 0; }
+        .tab { background: none; border: none; color: #888; cursor: pointer; padding: 8px 15px; font-size: 13px; font-weight: bold; transition: all 0.3s; }
+        .tab.active { color: #ff9500; border-bottom: 2px solid #ff9500; margin-bottom: -12px; padding-bottom: 10px; }
+        .tab:hover { color: #fff; }
+        .editor-input { flex: 1; background: #1a1a1a; border: none; color: #fff; padding: 15px; font-family: Arial, sans-serif; font-size: 13px; resize: none; font-weight: bold; min-height: 0; overflow-y: auto; }
+        .editor-input:focus { outline: none; }
+        .preview { flex: 1; background: #1a1a1a; padding: 15px; overflow-y: auto; font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; min-height: 0; }
+        .preview-line { margin-bottom: 12px; word-wrap: break-word; white-space: pre-wrap; }
+        .control-group { display: flex; align-items: center; gap: 8px; }
+        .control-btn { background: #333; border: 1px solid #555; color: #aaa; padding: 6px 12px; cursor: pointer; border-radius: 3px; font-size: 12px; font-weight: bold; transition: all 0.3s; flex-shrink: 0; }
+        .control-btn:hover { background: #444; color: #fff; border-color: #666; }
+        .control-btn.active { background: #ff9500; border-color: #ff9500; color: #000; }
+        .color-picker { width: 30px; height: 30px; border: 1px solid #555; cursor: pointer; border-radius: 3px; flex-shrink: 0; }
+        .bottom-controls { display: flex; gap: 10px; padding: 20px; background: #1a1a1a; border-top: 1px solid #444; flex-shrink: 0; }
+        .btn-download, .btn-copy { flex: 1; padding: 12px; background: #ff9500; border: none; color: #000; font-weight: bold; cursor: pointer; border-radius: 3px; font-size: 14px; transition: all 0.3s; }
+        .btn-download:hover, .btn-copy:hover { background: #ffaa22; transform: translateY(-2px); }
+        .btn-clear { padding: 12px; background: #555; border: none; color: #fff; font-weight: bold; cursor: pointer; border-radius: 3px; font-size: 14px; flex-shrink: 0; }
+        .btn-clear:hover { background: #666; }
         @media (max-width: 768px) {
-            .editor-section {
-                grid-template-columns: 1fr;
-                padding: 10px;
-            }
-            
-            .header {
-                padding: 10px;
-                gap: 10px;
-            }
-            
-            .header-item {
-                flex: 1;
-                min-width: 120px;
-            }
-            
-            .bottom-controls {
-                padding: 10px;
-                gap: 8px;
-            }
-            
-            .btn-download, .btn-copy, .btn-clear {
-                padding: 10px;
-                font-size: 12px;
-            }
+            .editor-section { grid-template-columns: 1fr; padding: 10px; }
+            .header { padding: 10px; gap: 10px; }
+            .header-item { flex: 1; min-width: 120px; }
+            .bottom-controls { padding: 10px; gap: 8px; }
+            .btn-download, .btn-copy, .btn-clear { padding: 10px; font-size: 12px; }
         }
-        
-        .install-prompt {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #ff9500;
-            color: #000;
-            padding: 15px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            z-index: 1000;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            animation: slideUp 0.3s ease;
-        }
-        
-        @keyframes slideUp {
-            from {
-                transform: translateY(100px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
+        .install-prompt { position: fixed; bottom: 20px; right: 20px; background: #ff9500; color: #000; padding: 15px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.3); animation: slideUp 0.3s ease; }
+        @keyframes slideUp { from { transform: translateY(100px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
     </style>
 </head>
 <body>
@@ -317,7 +66,7 @@
                 <input type="text" id="highlight" placeholder="e.g. John Smith" style="flex: 1; width: auto;">
             </div>
         </div>
-        
+
         <div class="editor-section">
             <div class="editor-panel">
                 <div class="panel-header">
@@ -326,7 +75,7 @@
                 </div>
                 <textarea class="editor-input" id="messageInput" placeholder="Admin: Merhaba&#10;Player: Nasılsın?"></textarea>
             </div>
-            
+
             <div class="preview-panel">
                 <div class="panel-header">
                     <button class="tab active">Preview</button>
@@ -334,7 +83,7 @@
                 <div class="preview" id="preview"></div>
             </div>
         </div>
-        
+
         <div class="panel-header" style="margin-top: 0;">
             <button class="tab active">Chat</button>
             <button class="control-btn" id="bgToggle" style="margin-left: auto;">BG: Off</button>
@@ -343,16 +92,15 @@
                 <input type="color" class="color-picker" id="bgColor" value="#1a1a1a">
             </div>
         </div>
-        
+
         <div class="bottom-controls">
             <button class="btn-copy" onclick="copyImage()">Copy Image</button>
             <button class="btn-download" onclick="downloadPNG()">Download</button>
             <button class="btn-clear" onclick="clearInput()">Clear</button>
         </div>
     </div>
-    
+
     <script>
-        // Service Worker Registration
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('data:application/javascript,' + encodeURIComponent(`
                 self.addEventListener('install', event => {
@@ -362,7 +110,6 @@
                         })
                     );
                 });
-                
                 self.addEventListener('fetch', event => {
                     event.respondWith(
                         caches.match(event.request).then(response => {
@@ -372,16 +119,14 @@
                 });
             `)).catch(err => console.log('Service Worker registration failed', err));
         }
-        
-        // PWA Install
+
         let deferredPrompt;
-        
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
             showInstallPrompt();
         });
-        
+
         function showInstallPrompt() {
             const prompt = document.createElement('div');
             prompt.className = 'install-prompt';
@@ -399,66 +144,65 @@
             };
             document.body.appendChild(prompt);
         }
-        
-        // App Logic
+
         const messageInput = document.getElementById('messageInput');
         const preview = document.getElementById('preview');
         const fontSize = document.getElementById('fontSize');
         const bgToggle = document.getElementById('bgToggle');
         const bgColor = document.getElementById('bgColor');
-        
+
         let bgEnabled = false;
-        
+
         messageInput.addEventListener('input', updatePreview);
         fontSize.addEventListener('change', updatePreview);
         bgToggle.addEventListener('click', toggleBG);
         bgColor.addEventListener('change', updatePreview);
-        
-        // Local Storage
+
         window.addEventListener('beforeunload', () => {
             localStorage.setItem('samp_messages', messageInput.value);
             localStorage.setItem('samp_fontSize', fontSize.value);
             localStorage.setItem('samp_bgEnabled', bgEnabled);
             localStorage.setItem('samp_bgColor', bgColor.value);
         });
-        
+
         window.addEventListener('load', () => {
             const saved = localStorage.getItem('samp_messages');
             if (saved) messageInput.value = saved;
-            
             const savedSize = localStorage.getItem('samp_fontSize');
             if (savedSize) fontSize.value = savedSize;
-            
             const savedBg = localStorage.getItem('samp_bgEnabled');
             if (savedBg === 'true') {
                 bgEnabled = true;
                 bgToggle.textContent = 'BG: On';
                 bgToggle.classList.add('active');
             }
-            
             const savedColor = localStorage.getItem('samp_bgColor');
             if (savedColor) bgColor.value = savedColor;
-            
             updatePreview();
         });
-        
+
         function updatePreview() {
             const text = messageInput.value;
             const lines = text.split('\n');
-            
+
             preview.innerHTML = '';
             lines.forEach(line => {
                 if (line.trim()) {
                     const div = document.createElement('div');
                     div.className = 'preview-line';
-                    
+
                     let color = '#FFFFFF';
-                    if (line.toLowerCase().includes('admin')) color = '#FF0000';
+                    let displayText = line;
+
+                    if (line.startsWith('*')) {
+                        color = '#00BFFF';
+                        displayText = line.substring(1);
+                    } else if (line.toLowerCase().includes('admin')) color = '#FF0000';
                     else if (line.toLowerCase().includes('mod')) color = '#FFA500';
                     else if (line.toLowerCase().includes('helper')) color = '#00FFFF';
                     else if (line.toLowerCase().includes('vip')) color = '#FFD700';
-                    
-                    div.textContent = line;
+
+                    div.textContent = displayText;
                     div.style.color = color;
                     div.style.fontSize = fontSize.value + 'px';
                     div.style.fontFamily = 'Arial, sans-serif';
@@ -467,72 +211,77 @@
                 }
             });
         }
-        
+
         function toggleBG() {
             bgEnabled = !bgEnabled;
             bgToggle.textContent = bgEnabled ? 'BG: On' : 'BG: Off';
             bgToggle.classList.toggle('active');
         }
-        
+
         function clearInput() {
             if (confirm('Temizlemek istediğinizden emin misiniz?')) {
                 messageInput.value = '';
                 updatePreview();
             }
         }
-        
+
         function downloadPNG() {
             const text = messageInput.value;
             if (!text.trim()) {
                 alert('Lütfen mesaj yazın!');
                 return;
             }
-            
+
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
-            
+
             const lines = text.split('\n').filter(l => l.trim());
             const fontSize_px = parseInt(fontSize.value);
             const lineHeight = fontSize_px + 16;
             const width = 1200;
             const height = lines.length * lineHeight + 80;
-            
+
             canvas.width = width;
             canvas.height = height;
-            
+
             if (bgEnabled) {
                 ctx.fillStyle = bgColor.value;
             } else {
                 ctx.fillStyle = '#1a1a1a';
             }
             ctx.fillRect(0, 0, width, height);
-            
+
             ctx.fillStyle = '#2a2a2a';
             ctx.fillRect(0, 0, width, 50);
-            
+
             ctx.fillStyle = '#FFFFFF';
-            ctx.font = `bold 18px Arial`;
+            ctx.font = 'bold 18px Arial';
             ctx.fillText('SAMP CHAT LOG', 20, 35);
-            
+
             ctx.strokeStyle = '#444';
             ctx.lineWidth = 2;
             ctx.beginPath();
             ctx.moveTo(0, 50);
             ctx.lineTo(width, 50);
             ctx.stroke();
-            
+
             ctx.font = `bold ${fontSize_px + 2}px Arial`;
             lines.forEach((line, index) => {
                 let color = '#FFFFFF';
-                if (line.toLowerCase().includes('admin')) color = '#FF0000';
+                let displayText = line;
+
+                if (line.startsWith('*')) {
+                    color = '#00BFFF';
+                    displayText = line.substring(1);
+                } else if (line.toLowerCase().includes('admin')) color = '#FF0000';
                 else if (line.toLowerCase().includes('mod')) color = '#FFA500';
                 else if (line.toLowerCase().includes('helper')) color = '#00FFFF';
                 else if (line.toLowerCase().includes('vip')) color = '#FFD700';
-                
+
                 ctx.fillStyle = color;
-                ctx.fillText(line, 20, 50 + 35 + (index * lineHeight));
+                ctx.fillText(displayText, 20, 50 + 35 + (index * lineHeight));
             });
-            
+
             canvas.toBlob(blob => {
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
@@ -542,59 +291,64 @@
                 URL.revokeObjectURL(url);
             });
         }
-        
+
         function copyImage() {
             const text = messageInput.value;
             if (!text.trim()) {
                 alert('Lütfen mesaj yazın!');
                 return;
             }
-            
+
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
-            
+
             const lines = text.split('\n').filter(l => l.trim());
             const fontSize_px = parseInt(fontSize.value);
             const lineHeight = fontSize_px + 16;
             const width = 1200;
             const height = lines.length * lineHeight + 80;
-            
+
             canvas.width = width;
             canvas.height = height;
-            
+
             if (bgEnabled) {
                 ctx.fillStyle = bgColor.value;
             } else {
                 ctx.fillStyle = '#1a1a1a';
             }
             ctx.fillRect(0, 0, width, height);
-            
+
             ctx.fillStyle = '#2a2a2a';
             ctx.fillRect(0, 0, width, 50);
-            
+
             ctx.fillStyle = '#FFFFFF';
-            ctx.font = `bold 18px Arial`;
+            ctx.font = 'bold 18px Arial';
             ctx.fillText('SAMP CHAT LOG', 20, 35);
-            
+
             ctx.strokeStyle = '#444';
             ctx.lineWidth = 2;
             ctx.beginPath();
             ctx.moveTo(0, 50);
             ctx.lineTo(width, 50);
             ctx.stroke();
-            
+
             ctx.font = `bold ${fontSize_px + 2}px Arial`;
             lines.forEach((line, index) => {
                 let color = '#FFFFFF';
-                if (line.toLowerCase().includes('admin')) color = '#FF0000';
+                let displayText = line;
+
+                if (line.startsWith('*')) {
+                    color = '#00BFFF';
+                    displayText = line.substring(1);
+                } else if (line.toLowerCase().includes('admin')) color = '#FF0000';
                 else if (line.toLowerCase().includes('mod')) color = '#FFA500';
                 else if (line.toLowerCase().includes('helper')) color = '#00FFFF';
                 else if (line.toLowerCase().includes('vip')) color = '#FFD700';
-                
+
                 ctx.fillStyle = color;
-                ctx.fillText(line, 20, 50 + 35 + (index * lineHeight));
+                ctx.fillText(displayText, 20, 50 + 35 + (index * lineHeight));
             });
-            
+
             canvas.toBlob(blob => {
                 navigator.clipboard.write([
                     new ClipboardItem({'image/png': blob})
@@ -603,7 +357,7 @@
                 });
             });
         }
-        
+
         updatePreview();
     </script>
 </body>
